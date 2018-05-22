@@ -1,6 +1,7 @@
 def my_fun(b):
     """This is my function document strings,    
-        similiar to comments but can be exported to __doc__"""
+        similiar to comments but can be exported to __doc__
+        And I used this function to verify the args change"""
     b[0] = b[0]*b[0]
     return b
 
