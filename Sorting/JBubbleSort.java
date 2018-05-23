@@ -21,8 +21,9 @@ public class JBubbleSort{
                     data[j]=tem;
                 }
             }
-            for(int k=0; k<data.length; k++){
-                System.out.print(data[k]+"  ");                            
+            //change 'for' to 'foreach'
+            for(int k:data){
+                System.out.print(k+"  ");                            
             }
             System.out.println(" ");                        
         }
