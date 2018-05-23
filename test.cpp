@@ -1,51 +1,36 @@
 #include <iostream>
-#include <memory>
-#include <thread>
-#include <chrono>
-#include <mutex>
-
-using namespace std;
-
-struct Base
-{
-    Base() {  cout << "  Base::Base()\n"; }
-    // Note: non-virtual destructor is OK here
-    ~Base() {  cout << "  Base::~Base()\n"; }
-};
- 
-struct Derived: public Base
-{
-    Derived() {  cout << "  Derived::Derived()\n"; }
-    ~Derived() {  cout << "  Derived::~Derived()\n"; }
-};
- 
-void thr( shared_ptr<Base> p)
-{
-     _sleep(10);
-     shared_ptr<Base> lp = p; // thread-safe, even though the
-                                  // shared use_count is incremented
-    {
-        static mutex io_mutex;
-         lock_guard< mutex> lk(io_mutex);
-         cout << "local pointer in a thread:\n"
-                  << "  lp.get() = " << lp.get()
-                  << ", lp.use_count() = " << lp.use_count() << '\n';
+class Base{
+    int a = 0;
+    public: 
+    void say(){
+        printf("I am from Base3 - %d. \n", a);
     }
-}
- 
-int main()
-{
-     shared_ptr<Base> p =  make_shared<Derived>();
- 
-     cout << "Created a shared Derived (as a pointer to Base)\n"
-              << "  p.get() = " << p.get()
-              << ", p.use_count() = " << p.use_count() << '\n';
-     thread t1(thr, p), t2(thr, p), t3(thr, p);
-    p.reset(); // release ownership from main
-     cout << "Shared ownership between 3 threads and released\n"
-              << "ownership from main:\n"
-              << "  p.get() = " << p.get()
-              << ", p.use_count() = " << p.use_count() << '\n';
-    t1.join(); t2.join(); t3.join();
-     cout << "All threads completed, the last one deleted Derived\n";
+};
+
+class Derived:public Base{
+    int b = 1;
+    public: 
+    void say(){
+        printf("I am from Derived3 - %d. \n", b);
+    }
+};
+void fun(int& a, int& b){
+        a = b;
+    };
+
+int main(){
+    Base b;
+    // b.a = 10;
+    Derived d;
+    Base *p = &d;
+    p->say();
+
+    // Let me define a function to verify the reference/pointer delivery.
+    int aa = 0; int bb= 1;
+    printf("The original aa/bb are: %d / %d \n", aa, bb);
+    fun(aa, bb);
+    printf("The disposed aa/bb are: %d / %d \n", aa, bb);    
+
+    return 0;
+    
 }
