@@ -1,17 +1,18 @@
 #include <iostream>
 #include <string>
+using namespace std;
 /* This piece of code is for testing string function in C++.*/
 int main(){
-    std::string s = "My name is Jacob";
+    string s = "My name is Jacob";
     for(char c: s){
         printf(" %c", c);
     }
 
-    std::cout<<std::endl<<s<<std::endl;
+    cout<<std::endl<<s<<endl;
 
-    std::cout<<"The the 3rd char is: "<<s.at(3)<<std::endl;
+    cout<<"The the 3rd char is: "<<s.at(3)<<endl;
 
-    std::cout<<"The size of the string is:"<<s.size()<<std::endl;
+    cout<<"The size of the string is:"<<s.size()<<endl;
 
     return 0;
 }
